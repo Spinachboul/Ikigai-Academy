@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance Prediction</title>
+</head>
+<body>
+    <h1>Student Performance Prediction</h1>
+    <form id="prediction-form">
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender"><br><br>
+        
+        <label for="race">Race/Ethnicity:</label>
+        <input type="text" id="race" name="race"><br><br>
+        
+        <label for="parental-education">Parental Education:</label>
+        <input type="text" id="parental-education" name="parental-education"><br><br>
+        
+        <label for="lunch">Lunch:</label>
+        <input type="text" id="lunch" name="lunch"><br><br>
+        
+        <label for="test-preparation">Test Preparation:</label>
+        <input type="text" id="test-preparation" name="test-preparation"><br><br>
+        
+        <label for="reading-score">Reading Score:</label>
+        <input type="number" id="reading-score" name="reading-score"><br><br>
+        
+        <label for="math-score">Math Score:</label>
+        <input type="number" id="math-score" name="math-score"><br><br>
+        
+        <button type="submit">Predict</button>
+    </form>
+
+    <p id="prediction-result"></p>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get the form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            // Send a POST request to the Flask API
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Display the prediction result
+                document.getElementById('prediction-result').textContent = 'Predicted Final Score: ' + result.prediction;
+            });
+        });
+    </script>
+</body>
+</html>

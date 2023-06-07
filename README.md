@@ -1,1 +1,1 @@
-# Ikigai-Academy
+# IKIGAI ACADEMY
